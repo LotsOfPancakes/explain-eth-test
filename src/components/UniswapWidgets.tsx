@@ -2,10 +2,20 @@
 import React from 'react';
 
 export const WalletBalance: React.FC<{ eth: number; usdt?: number }> = ({ eth, usdt }) => (
-  <div className="bg-gray-800 border border-gray-700 shadow-md rounded-lg p-6 my-8 max-w-md mx-auto text-white">
-    <h4 className="text-lg font-semibold text-white mb-3">Your Wallet Balance</h4>
-    <p className="text-gray-300 text-base">ETH: {eth}</p>
-    {usdt && <p className="text-gray-300 text-base">USDT: {usdt}</p>}
+  <div className="bg-gray-800 border border-gray-700 shadow-md rounded-lg p-6 my-12 max-w-md mx-auto text-white">
+    <h4 className="text-lg font-semibold text-white mb-4">Your Balance</h4>
+    <div className="space-y-2">
+      <div className="flex justify-between">
+        <span className="text-gray-400 text-sm">ETH</span>
+        <span className="text-gray-300 text-base">{eth}</span>
+      </div>
+      {usdt && (
+        <div className="flex justify-between">
+          <span className="text-gray-400 text-sm">USDT</span>
+          <span className="text-gray-300 text-base">{usdt}</span>
+        </div>
+      )}
+    </div>
   </div>
 );
 
