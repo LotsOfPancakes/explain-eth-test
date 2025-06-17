@@ -33,7 +33,7 @@ export const UniswapSwapInterface: React.FC = () => {
           <div className="bg-[#252529] border border-[#3A3B43] rounded-lg p-3 flex items-center">
             <input
               type="number"
-              className="bg-transparent text-white flex-1 outline-none"
+              className="bg-transparent text-white flex-1 outline-none text-lg"
               placeholder="0"
               disabled
             />
@@ -58,7 +58,7 @@ export const UniswapSwapInterface: React.FC = () => {
           <div className="bg-[#252529] border border-[#3A3B43] rounded-lg p-3 flex items-center">
             <input
               type="number"
-              className="bg-transparent text-white flex-1 outline-none"
+              className="bg-transparent text-white flex-1 outline-none text-lg"
               placeholder="0"
               disabled
             />
@@ -93,12 +93,16 @@ export const UniswapSwapAndBalance: React.FC = () => {
     }
   };
 
+  const formatNumber = (num: number) => {
+    return parseFloat(num.toString()).toString();
+  };
+
   const calculateBuyAmount = () => {
     const sell = parseFloat(sellAmount) || 0;
     if (isEthToUsdt) {
-      return (sell * EXCHANGE_RATE).toFixed(2);
+      return formatNumber(sell * EXCHANGE_RATE);
     } else {
-      return (sell / EXCHANGE_RATE).toFixed(6);
+      return formatNumber(sell / EXCHANGE_RATE);
     }
   };
 
@@ -148,7 +152,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
           <div className="bg-[#252529] border border-[#3A3B43] rounded-lg p-3 flex items-center">
             <input
               type="text"
-              className="bg-transparent text-white flex-1 outline-none text-base"
+              className="bg-transparent text-white flex-1 outline-none text-lg"
               placeholder="0"
               value={sellAmount}
               onChange={handleSellAmountChange}
@@ -179,7 +183,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
           <div className="bg-[#252529] border border-[#3A3B43] rounded-lg p-3 flex items-center">
             <input
               type="text"
-              className="bg-transparent text-white flex-1 outline-none text-base"
+              className="bg-transparent text-white flex-1 outline-none text-lg"
               placeholder="0"
               value={calculateBuyAmount()}
               disabled
@@ -194,18 +198,6 @@ export const UniswapSwapAndBalance: React.FC = () => {
           </div>
         </div>
         <div className="mt-4 relative">
-          <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-base">You pay</span>
-            <span className="text-white text-base">
-              {sellAmount || '0'} {isEthToUsdt ? 'ETH' : 'USDT'}
-            </span>
-          </div>
-          <div className="flex justify-between items-center mb-4">
-            <span className="text-gray-400 text-base">You receive</span>
-            <span className="text-white text-base">
-              {calculateBuyAmount()} {isEthToUsdt ? 'USDT' : 'ETH'}
-            </span>
-          </div>
           <button
             onClick={handleSwap}
             disabled={isSwapping || swapCompleted || isInvalidInput() || isInsufficientBalance()}
@@ -256,12 +248,12 @@ export const UniswapSwapAndBalance: React.FC = () => {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-green-500 text-2xl font-medium">ETH</span>
-              <span className="text-green-500 text-2xl font-medium">{balance.eth.toFixed(6)}</span>
+              <span className="text-green-500 text-2xl font-medium">{formatNumber(balance.eth)}</span>
             </div>
             {balance.usdt > 0 && (
               <div className="flex justify-between">
                 <span className="text-green-500 text-2xl font-medium">USDT</span>
-                <span className="text-green-500 text-2xl font-medium">{balance.usdt.toFixed(2)}</span>
+                <span className="text-green-500 text-2xl font-medium">{formatNumber(balance.usdt)}</span>
               </div>
             )}
           </div>
