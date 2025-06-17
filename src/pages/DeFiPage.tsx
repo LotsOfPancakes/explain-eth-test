@@ -76,7 +76,7 @@ const DeFiPage: React.FC = () => {
               <li>Withdraw the USDT back to your wallet</li>
             </ol>
             <p>
-              Assuming you already have an account, it'll take ~20 minutes. If not, you'll likely go through account creation + KYC processes that requires >24 hours! That's a really long wait to buy and sell something, no?
+              Assuming you already have an account, it'll likely take ~20 minutes. Otherwise, account creation + KYC processes that requires &gt;24 hours! That's a really long wait to buy and sell something, no?
             </p>
             <p>
               Let's see how AMMs fare in this regard.
@@ -133,7 +133,10 @@ const DeFiPage: React.FC = () => {
               In AMMs, more liquidity equals better exchange rate - this is determined by specific mathematical formulas defined in the smart contract.
             </p>
             <p>
-              Overall, this ingenious design creates a cycle where: more liquidity = better exchange rates = more swaps = more fees generated = more liquidity that wants to come in. Visualized:
+              Overall, this ingenious design creates a cycle where: more liquidity = better exchange rates = more swaps = more fees generated = more liquidity that wants to come in.
+            </p>
+            <p>
+              Visualized:
             </p>
             <LiquidityCycleGraphic />
             <h2 className="text-2xl font-semibold text-white mt-8 mb-4">Closing</h2>
@@ -141,7 +144,7 @@ const DeFiPage: React.FC = () => {
               So - are AMMs better? In most cases - yes! By cutting out the middlemen (operators), you can effectively offer better rates + quicker turnaround that benefits the end-user.
             </p>
             <p>
-              With a traditional approach, you may need anywhere between 30 minutes to 24 hours for your exchange, while the DeFi approach only takes 1 minute or less.
+              With a traditional approach, you may need anywhere between 20 minutes to 24 hours for your exchange, while the DeFi approach only takes 1 minute or less.
             </p>
             <p>
               Whenever you're ready to learn about the next DeFi application, read on!
