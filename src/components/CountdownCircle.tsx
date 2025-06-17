@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react';
 
 interface CountdownCircleProps {
-  duration: number; // in seconds
+  duration: number;
   onComplete: () => void;
-  size?: number; // SVG size in pixels
-  strokeWidth?: number; // Stroke width in pixels
-  className?: string; // For stroke color
+  size?: number;
+  strokeWidth?: number;
+  className?: string;
 }
 
 const CountdownCircle: React.FC<CountdownCircleProps> = ({
@@ -14,9 +14,9 @@ const CountdownCircle: React.FC<CountdownCircleProps> = ({
   onComplete,
   size = 24,
   strokeWidth = 3,
-  className = 'text-blue-400',
+  className = 'text-blue-500',
 }) => {
-  const [timeLeft, setTimeLeft] = useState(duration * 1000); // in milliseconds
+  const [timeLeft, setTimeLeft] = useState(duration * 1000);
 
   useEffect(() => {
     const startTime = Date.now();
@@ -29,16 +29,16 @@ const CountdownCircle: React.FC<CountdownCircleProps> = ({
         clearInterval(interval);
         onComplete();
       }
-    }, 50); // Update every 50ms for smooth animation
+    }, 50);
 
     return () => clearInterval(interval);
   }, [duration, onComplete]);
 
-  const progress = timeLeft / (duration * 1000); // 1 to 0
+  const progress = timeLeft / (duration * 1000);
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference * (1 - progress); // Animate from 0 to circumference
-  const secondsLeft = Math.ceil(timeLeft / 1000); // Display seconds
+  const offset = circumference * (1 - progress);
+  const secondsLeft = Math.ceil(timeLeft / 1000);
 
   return (
     <svg width={size} height={size} className={`inline-block ${className}`}>
