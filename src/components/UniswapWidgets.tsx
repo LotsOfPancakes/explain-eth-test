@@ -1,5 +1,5 @@
 // src/components/UniswapWidgets.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CountdownCircle from './CountdownCircle';
 
 export const WalletBalance: React.FC<{ eth: number; usdt?: number }> = ({ eth, usdt }) => (
@@ -85,7 +85,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
 
   const handleSwapComplete = () => {
     setIsSwapping(false);
-    setSwapCompleted(true);
+    setSwapCompleted(false); // Auto-reset to "Swap"
     if (isEthToUsdt) {
       setBalance({ eth: balance.eth - 1, usdt: balance.usdt + 3000 });
     } else {
@@ -98,12 +98,6 @@ export const UniswapSwapAndBalance: React.FC = () => {
     setError(null);
     setIsSwapping(false);
     setSwapCompleted(false);
-  };
-
-  const handleResetSwap = () => {
-    setSwapCompleted(false);
-    setError(null);
-    setBalance({ eth: 2, usdt: 0 });
   };
 
   return (
@@ -150,7 +144,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
             <span className="text-white text-base">{isEthToUsdt ? '3000 USDT' : '1 ETH'}</span>
           </div>
           <button
-            onClick={swapCompleted ? handleResetSwap : handleSwap}
+            onClick={handleSwap}
             disabled={isSwapping}
             className="w-full bg-[#2172E5] text-white font-semibold px-4 py-3 rounded-xl hover:bg-[#1A5CCB] focus:outline-none focus:ring-2 focus:ring-[#2172E5] transition flex items-center justify-center disabled:opacity-50"
           >
@@ -162,11 +156,9 @@ export const UniswapSwapAndBalance: React.FC = () => {
                   onComplete={handleSwapComplete}
                   size={24}
                   strokeWidth={3}
-                  className="ml-2 text-blue-400"
+                  className="ml-3 text-blue-400"
                 />
               </span>
-            ) : swapCompleted ? (
-              'Swap Completed'
             ) : (
               'Swap'
             )}
