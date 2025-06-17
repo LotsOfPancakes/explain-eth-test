@@ -133,7 +133,6 @@ export const UniswapSwapAndBalance: React.FC = () => {
     }
     setSellAmount('');
 
-    // Reset to "Swap" after 2 seconds
     setTimeout(() => {
       setSwapCompleted(false);
     }, 2000);
@@ -149,7 +148,6 @@ export const UniswapSwapAndBalance: React.FC = () => {
 
   return (
     <div className="bg-[#1A1B1F] border border-[#2F3037] shadow-lg rounded-xl p-6 my-8 max-w-md mx-auto text-white">
-      <h4 className="text-lg font-semibold text-white mb-4">Swap & Balance</h4>
       <div className="space-y-4">
         <div>
           <label className="block text-gray-400 text-sm mb-1">Sell</label>
@@ -220,25 +218,34 @@ export const UniswapSwapAndBalance: React.FC = () => {
             className="w-full bg-[#2172E5] text-white font-semibold px-4 py-3 rounded-xl hover:bg-[#1A5CCB] focus:outline-none focus:ring-2 focus:ring-[#2172E5] transition flex items-center justify-center disabled:opacity-50 relative"
           >
             {isSwapping ? (
-              <>
+              <div className="flex items-center">
                 <span className="text-gray-400">Swapping</span>
-                <CountdownCircle
-                  duration={12}
-                  onComplete={handleSwapComplete}
-                  size={24}
-                  strokeWidth={3}
-                  className="ml-3 text-blue-400"
-                />
-              </>
+                <div className="ml-3 opacity-100">
+                  <CountdownCircle
+                    duration={12}
+                    onComplete={handleSwapComplete}
+                    size={24}
+                    strokeWidth={3}
+                    className="text-blue-400"
+                  />
+                </div>
+              </div>
             ) : swapCompleted ? (
               <>
                 Swap Complete
-                {/* Confetti Animation */}
                 <div className="absolute inset-0 pointer-events-none">
-                  <div className="confetti animate-confetti bg-blue-400 w-1 h-1 rounded-full absolute left-1/4 top-0"></div>
-                  <div className="confetti animate-confetti bg-red-400 w-1 h-1 rounded-full absolute left-1/3 top-0" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="confetti animate-confetti bg-green-400 w-1 h-1 rounded-full absolute left-1/2 top-0" style={{ animationDelay: '0.2s' }}></div>
-                  <div className="confetti animate-confetti bg-yellow-400 w-1 h-1 rounded-full absolute left-2/3 top-0" style={{ animationDelay: '0.3s' }}></div>
+                  <div className="confetti animate-confetti bg-blue-500 w-2 h-2 rounded-full absolute left-1/5 top-0"></div>
+                  <div className="confetti animate-confetti bg-red-500 w-2 h-2 rounded-full absolute left-2/5 top-0" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="confetti animate-confetti bg-green-500 w-2 h-2 rounded-full absolute left-3/5 top-0" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="confetti animate-confetti bg-yellow-500 w-2 h-2 rounded-full absolute left-4/5 top-0" style={{ animationDelay: '0.3s' }}></div>
+                  <div className="confetti animate-confetti bg-purple-500 w-2 h-2 rounded-full absolute left-1/4 top-0" style={{ animationDelay: '0.15s' }}></div>
+                  <div className="confetti animate-confetti bg-pink-500 w-2 h-2 rounded-full absolute left-3/4 top-0" style={{ animationDelay: '0.25s' }}></div>
+                  <div className="confetti animate-confetti bg-blue-500 w-2 h-2 rounded-full absolute left-1/3 top-0" style={{ animationDelay: '0.35s' }}></div>
+                  <div className="confetti animate-confetti bg-red-500 w-2 h-2 rounded-full absolute left-2/3 top-0" style={{ animationDelay: '0.4s' }}></div>
+                  <div className="confetti animate-confetti bg-green-500 w-2 h-2 rounded-full absolute left-1/2 top-0" style={{ animationDelay: '0.45s' }}></div>
+                  <div className="confetti animate-confetti bg-yellow-500 w-2 h-2 rounded-full absolute left-1/6 top-0" style={{ animationDelay: '0.5s' }}></div>
+                  <div className="confetti animate-confetti bg-purple-500 w-2 h-2 rounded-full absolute left-5/6 top-0" style={{ animationDelay: '0.55s' }}></div>
+                  <div className="confetti animate-confetti bg-pink-500 w-2 h-2 rounded-full absolute left-1/2 top-0" style={{ animationDelay: '0.6s' }}></div>
                 </div>
               </>
             ) : (
@@ -268,10 +275,10 @@ export const UniswapSwapAndBalance: React.FC = () => {
       <style jsx>{`
         @keyframes confetti {
           0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-          100% { transform: translateY(100px) rotate(360deg); opacity: 0; }
+          100% { transform: translateY(120px) rotate(720deg); opacity: 0; }
         }
         .animate-confetti {
-          animation: confetti 1s ease-out forwards;
+          animation: confetti 1.2s ease-out forwards;
         }
       `}</style>
     </div>
