@@ -8,17 +8,22 @@ import { WalletBalance, UniswapSwapAndBalance } from '../components/UniswapWidge
 import { FootnoteProvider } from '../components/Footnote';
 
 const LiquidityCycleGraphic: React.FC = () => (
-  <div className="my-8 flex justify-center">
+  <div className="my-8 flex justify-center bg-black p-6 rounded-lg">
     <svg width="300" height="300" viewBox="0 0 300 300" className="text-blue-500">
       <circle cx="150" cy="150" r="120" stroke="currentColor" strokeWidth="4" fill="none" />
+      {/* Top arrow: Liquidity Added (unchanged, points down) */}
       <path d="M150 30 L165 45 L150 60" fill="currentColor" />
-      <path d="M270 150 L255 135 L240 150" fill="currentColor" />
+      {/* Right arrow: People Swap (points down) */}
+      <path d="M270 150 L255 165 L240 150" fill="currentColor" />
+      {/* Bottom arrow: Fees Increase (unchanged, points up) */}
       <path d="M150 270 L165 255 L150 240" fill="currentColor" />
+      {/* Left arrow: More Liquidity (unchanged, points right) */}
       <path d="M30 150 L45 165 L60 150" fill="currentColor" />
-      <text x="150" y="50" textAnchor="middle" className="text-white text-sm font-medium">Liquidity Added</text>
-      <text x="250" y="150" textAnchor="middle" className="text-white text-sm font-medium">People Swap</text>
-      <text x="150" y="250" textAnchor="middle" className="text-white text-sm font-medium">Fees Increase</text>
-      <text x="50" y="150" textAnchor="middle" className="text-white text-sm font-medium">More Liquidity</text>
+      {/* Text labels: Positioned beside arrows */}
+      <text x="150" y="20" textAnchor="middle" className="text-gray-200 text-sm font-medium">Liquidity Added</text>
+      <text x="280" y="150" textAnchor="start" className="text-gray-200 text-sm font-medium">People Swap</text>
+      <text x="150" y="280" textAnchor="middle" className="text-gray-200 text-sm font-medium">Fees Increase</text>
+      <text x="20" y="150" textAnchor="end" className="text-gray-200 text-sm font-medium">More Liquidity</text>
     </svg>
   </div>
 );
