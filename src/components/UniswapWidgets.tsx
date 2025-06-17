@@ -31,11 +31,19 @@ export const UniswapSwapInterface: React.FC = () => {
         <div>
           <label className="block text-gray-400 text-sm mb-1">Sell</label>
           <div className="bg-[#252529] border border-[#3A3B43] rounded-lg p-3 flex items-center">
-            <img src={ethLogo} alt="ETH" className="w-6 h-6 mr-2" />
-            <span className="text-white flex-1">ETH</span>
-            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
+            <input
+              type="number"
+              className="bg-transparent text-white flex-1 outline-none"
+              placeholder="0"
+              disabled
+            />
+            <div className="flex items-center">
+              <img src={ethLogo} alt="ETH" className="w-6 h-6 mr-2" />
+              <span className="text-white">ETH</span>
+              <svg className="w-4 h-4 text-gray-400 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
           </div>
         </div>
         <div className="flex justify-center my-2">
@@ -48,11 +56,19 @@ export const UniswapSwapInterface: React.FC = () => {
         <div>
           <label className="block text-gray-400 text-sm mb-1">Buy</label>
           <div className="bg-[#252529] border border-[#3A3B43] rounded-lg p-3 flex items-center">
-            <img src={usdtLogo} alt="USDT" className="w-6 h-6 mr-2" />
-            <span className="text-white flex-1">USDT</span>
-            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
+            <input
+              type="number"
+              className="bg-transparent text-white flex-1 outline-none"
+              placeholder="0"
+              disabled
+            />
+            <div className="flex items-center">
+              <img src={usdtLogo} alt="USDT" className="w-6 h-6 mr-2" />
+              <span className="text-white">USDT</span>
+              <svg className="w-4 h-4 text-gray-400 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -63,41 +79,65 @@ export const UniswapSwapInterface: React.FC = () => {
 export const UniswapSwapAndBalance: React.FC = () => {
   const [balance, setBalance] = useState<{ eth: number; usdt: number }>({ eth: 2, usdt: 0 });
   const [isSwapping, setIsSwapping] = useState(false);
-  const [swapCompleted, setSwapCompleted] = useState(false);
   const [isEthToUsdt, setIsEthToUsdt] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [sellAmount, setSellAmount] = useState<string>(''); // User input as string
   const ethLogo = '/img/eth-logo.svg';
   const usdtLogo = '/img/usdt.svg';
+  const EXCHANGE_RATE = 3000; // 1 ETH = 3000 USDT
+
+  const handleSellAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Allow empty input or valid numbers (including decimals)
+    if (value === '' || /^\d*\.?\d*$/.test(value)) {
+      setSellAmount(value);
+      setError(null);
+    }
+  };
+
+  const calculateBuyAmount = () => {
+    const sell = parseFloat(sellAmount) || 0;
+    if (isEthToUsdt) {
+      return (sell * EXCHANGE_RATE).toFixed(2); // ETH to USDT
+    } else {
+      return (sell / EXCHANGE_RATE).toFixed(6); // USDT to ETH
+    }
+  };
 
   const handleSwap = () => {
-    if (isEthToUsdt && balance.eth < 1) {
+    const sell = parseFloat(sellAmount);
+    if (!sell || sell <= 0) {
+      setError('Enter a valid amount');
+      return;
+    }
+    if (isEthToUsdt && balance.eth < sell) {
       setError('You do not have enough ETH');
       return;
     }
-    if (!isEthToUsdt && balance.usdt < 3000) {
+    if (!isEthToUsdt && balance.usdt < sell) {
       setError('You do not have enough USDT');
       return;
     }
     setError(null);
     setIsSwapping(true);
-    setSwapCompleted(false);
   };
 
   const handleSwapComplete = () => {
     setIsSwapping(false);
-    setSwapCompleted(false); // Auto-reset to "Swap"
+    const sell = parseFloat(sellAmount);
     if (isEthToUsdt) {
-      setBalance({ eth: balance.eth - 1, usdt: balance.usdt + 3000 });
+      setBalance({ eth: balance.eth - sell, usdt: balance.usdt + sell * EXCHANGE_RATE });
     } else {
-      setBalance({ eth: balance.eth + 1, usdt: balance.usdt - 3000 });
+      setBalance({ eth: balance.eth + sell / EXCHANGE_RATE, usdt: balance.usdt - sell });
     }
+    setSellAmount(''); // Clear input after swap
   };
 
   const handleReverseSwap = () => {
     setIsEthToUsdt(!isEthToUsdt);
     setError(null);
     setIsSwapping(false);
-    setSwapCompleted(false);
+    setSellAmount('');
   };
 
   return (
@@ -107,17 +147,28 @@ export const UniswapSwapAndBalance: React.FC = () => {
         <div>
           <label className="block text-gray-400 text-sm mb-1">Sell</label>
           <div className="bg-[#252529] border border-[#3A3B43] rounded-lg p-3 flex items-center">
-            <img src={isEthToUsdt ? ethLogo : usdtLogo} alt={isEthToUsdt ? 'ETH' : 'USDT'} className="w-6 h-6 mr-2" />
-            <span className="text-white flex-1">{isEthToUsdt ? 'ETH' : 'USDT'}</span>
-            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
+            <input
+              type="text"
+              className="bg-transparent text-white flex-1 outline-none text-base"
+              placeholder="0"
+              value={sellAmount}
+              onChange={handleSellAmountChange}
+              disabled={isSwapping}
+            />
+            <div className="flex items-center">
+              <img src={isEthToUsdt ? ethLogo : usdtLogo} alt={isEthToUsdt ? 'ETH' : 'USDT'} className="w-6 h-6 mr-2" />
+              <span className="text-white">{isEthToUsdt ? 'ETH' : 'USDT'}</span>
+              <svg className="w-4 h-4 text-gray-400 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
           </div>
         </div>
         <div className="flex justify-center my-2">
           <button
             onClick={handleReverseSwap}
             className="bg-[#252529] p-2 rounded-full hover:bg-[#3A3B43] transition"
+            disabled={isSwapping}
           >
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
@@ -127,21 +178,34 @@ export const UniswapSwapAndBalance: React.FC = () => {
         <div>
           <label className="block text-gray-400 text-sm mb-1">Buy</label>
           <div className="bg-[#252529] border border-[#3A3B43] rounded-lg p-3 flex items-center">
-            <img src={isEthToUsdt ? usdtLogo : ethLogo} alt={isEthToUsdt ? 'USDT' : 'ETH'} className="w-6 h-6 mr-2" />
-            <span className="text-white flex-1">{isEthToUsdt ? 'USDT' : 'ETH'}</span>
-            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
+            <input
+              type="text"
+              className="bg-transparent text-white flex-1 outline-none text-base"
+              placeholder="0"
+              value={calculateBuyAmount()}
+              disabled
+            />
+            <div className="flex items-center">
+              <img src={isEthToUsdt ? usdtLogo : ethLogo} alt={isEthToUsdt ? 'USDT' : 'ETH'} className="w-6 h-6 mr-2" />
+              <span className="text-white">{isEthToUsdt ? 'USDT' : 'ETH'}</span>
+              <svg className="w-4 h-4 text-gray-400 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
           </div>
         </div>
         <div className="mt-4">
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-base">You pay</span>
-            <span className="text-white text-base">{isEthToUsdt ? '1 ETH' : '3000 USDT'}</span>
+            <span className="text-white text-base">
+              {sellAmount || '0'} {isEthToUsdt ? 'ETH' : 'USDT'}
+            </span>
           </div>
           <div className="flex justify-between items-center mb-4">
             <span className="text-gray-400 text-base">You receive</span>
-            <span className="text-white text-base">{isEthToUsdt ? '3000 USDT' : '1 ETH'}</span>
+            <span className="text-white text-base">
+              {calculateBuyAmount()} {isEthToUsdt ? 'USDT' : 'ETH'}
+            </span>
           </div>
           <button
             onClick={handleSwap}
@@ -172,12 +236,12 @@ export const UniswapSwapAndBalance: React.FC = () => {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-green-500 text-2xl font-medium">ETH</span>
-              <span className="text-green-500 text-2xl font-medium">{balance.eth}</span>
+              <span className="text-green-500 text-2xl font-medium">{balance.eth.toFixed(6)}</span>
             </div>
             {balance.usdt > 0 && (
               <div className="flex justify-between">
                 <span className="text-green-500 text-2xl font-medium">USDT</span>
-                <span className="text-green-500 text-2xl font-medium">{balance.usdt}</span>
+                <span className="text-green-500 text-2xl font-medium">{balance.usdt.toFixed(2)}</span>
               </div>
             )}
           </div>
