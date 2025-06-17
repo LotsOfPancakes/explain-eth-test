@@ -4,7 +4,7 @@ import { useBlockchainContext } from "../contexts/BlockchainContext";
 import TransactionModal from "../components/TransactionModal";
 import TransactionHistoryOverlay from "../components/TransactionHistoryOverlay";
 import Navigation from "../components/Navigation";
-import { WalletBalance, UniswapSwapInterface, UniswapSwapOutcome } from "../components/UniswapWidgets";
+import { WalletBalance, UniswapSwapInterface, UniswapSwapProcess } from "../components/UniswapWidgets";
 import {
   FootnoteList,
   FootnoteProvider,
@@ -12,7 +12,7 @@ import {
 } from "../components/Footnote";
 import Vocab from "../components/Vocab";
 
-const DeFi: React.FC = () => {
+const DeFiPage: React.FC = () => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   const {
@@ -89,15 +89,9 @@ const DeFi: React.FC = () => {
                   </div>
                 </li>
                 <li>
-                  You’ll put in the amount you want to sell (1 ETH). You’ll see the expected amount and you can click “Swap”.
+                  You’ll put in the amount you want to sell (1 ETH). You’ll see the expected amount, click “Swap”, and see your updated balance.
                   <div className="my-8">
-                    <UniswapSwapOutcome />
-                  </div>
-                </li>
-                <li>
-                  Wait for the transaction to be done (in ~12s), and your wallet now has the USDT you need!
-                  <div className="my-8">
-                    <WalletBalance eth={1} usdt={3000} />
+                    <UniswapSwapProcess />
                   </div>
                 </li>
               </ol>
@@ -133,4 +127,4 @@ const DeFi: React.FC = () => {
   );
 };
 
-export default DeFi;
+export default DeFiPage;
