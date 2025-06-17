@@ -81,7 +81,6 @@ export const UniswapSwapAndBalance: React.FC = () => {
   const [isSwapping, setIsSwapping] = useState(false);
   const [swapCompleted, setSwapCompleted] = useState(false);
   const [isEthToUsdt, setIsEthToUsdt] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [sellAmount, setSellAmount] = useState<string>('');
   const ethLogo = '/img/eth-logo.svg';
   const usdtLogo = '/img/usdt.svg';
@@ -91,7 +90,6 @@ export const UniswapSwapAndBalance: React.FC = () => {
     const value = e.target.value;
     if (value === '' || /^\d*\.?\d*$/.test(value)) {
       setSellAmount(value);
-      setError(null);
     }
   };
 
@@ -104,21 +102,18 @@ export const UniswapSwapAndBalance: React.FC = () => {
     }
   };
 
+  const isInsufficientBalance = () => {
+    const sell = parseFloat(sellAmount) || 0;
+    return (
+      (isEthToUsdt && sell > balance.eth) ||
+      (!isEthToUsdt && sell > balance.usdt) ||
+      sell <= 0 ||
+      !sell
+    );
+  };
+
   const handleSwap = () => {
-    const sell = parseFloat(sellAmount);
-    if (!sell || sell <= 0) {
-      setError('Enter a valid amount');
-      return;
-    }
-    if (isEthToUsdt && balance.eth < sell) {
-      setError('You do not have enough ETH');
-      return;
-    }
-    if (!isEthToUsdt && balance.usdt < sell) {
-      setError('You do not have enough USDT');
-      return;
-    }
-    setError(null);
+    if (isInsufficientBalance()) return;
     setIsSwapping(true);
   };
 
@@ -140,7 +135,6 @@ export const UniswapSwapAndBalance: React.FC = () => {
 
   const handleReverseSwap = () => {
     setIsEthToUsdt(!isEthToUsdt);
-    setError(null);
     setIsSwapping(false);
     setSwapCompleted(false);
     setSellAmount('');
@@ -214,19 +208,19 @@ export const UniswapSwapAndBalance: React.FC = () => {
           </div>
           <button
             onClick={handleSwap}
-            disabled={isSwapping || swapCompleted}
+            disabled={isSwapping || swapCompleted || isInsufficientBalance()}
             className="w-full bg-[#2172E5] text-white font-semibold px-4 py-3 rounded-xl hover:bg-[#1A5CCB] focus:outline-none focus:ring-2 focus:ring-[#2172E5] transition flex items-center justify-center disabled:opacity-50 relative"
           >
             {isSwapping ? (
               <div className="flex items-center">
                 <span className="text-gray-400">Swapping</span>
-                <div className="ml-3 opacity-100">
+                <div className="ml-4 opacity-100">
                   <CountdownCircle
                     duration={12}
                     onComplete={handleSwapComplete}
                     size={24}
                     strokeWidth={3}
-                    className="text-blue-400"
+                    className="text-blue-500"
                   />
                 </div>
               </div>
@@ -248,13 +242,12 @@ export const UniswapSwapAndBalance: React.FC = () => {
                   <div className="confetti animate-confetti bg-pink-500 w-2 h-2 rounded-full absolute left-1/2 top-0" style={{ animationDelay: '0.6s' }}></div>
                 </div>
               </>
+            ) : isInsufficientBalance() ? (
+              <span className="text-gray-300">Insufficient {isEthToUsdt ? 'ETH' : 'USDT'}</span>
             ) : (
               'Swap'
             )}
           </button>
-          {error && (
-            <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
-          )}
         </div>
         <div className="mt-6">
           <h5 className="text-base font-semibold text-white mb-2">Your Balance</h5>
@@ -265,7 +258,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
             </div>
             {balance.usdt > 0 && (
               <div className="flex justify-between">
-                <span className="text-green-500 text-2xl font-medium">USDT</span>
+                <span className="text-gray-300 text-2xl font-medium">USDT</span>
                 <span className="text-green-500 text-2xl font-medium">{balance.usdt.toFixed(2)}</span>
               </div>
             )}
