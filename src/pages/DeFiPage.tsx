@@ -8,7 +8,7 @@ import { WalletBalance, UniswapSwapAndBalance } from '../components/UniswapWidge
 import { FootnoteProvider } from '../components/Footnote';
 
 const LiquidityCycleGraphic: React.FC = () => (
-  <div className="my-8 flex justify-center bg-black p-6 rounded-lg">
+  <div className="my-8 flex justify-center">
     <svg width="300" height="300" viewBox="0 0 300 300" className="text-blue-500">
       <circle cx="150" cy="150" r="120" stroke="currentColor" strokeWidth="4" fill="none" />
       {/* Top arrow: Liquidity Added (points down) */}
@@ -19,7 +19,7 @@ const LiquidityCycleGraphic: React.FC = () => (
       <path d="M150 270 L165 255 L150 240" fill="currentColor" />
       {/* Left arrow: More Liquidity (points right) */}
       <path d="M30 150 L45 165 L60 150" fill="currentColor" />
-      {/* Text labels: Positioned beside arrows with increased size and offset */}
+      {/* Text labels: Positioned beside arrows */}
       <text x="150" y="10" textAnchor="middle" className="text-white text-base font-medium">Liquidity Added</text>
       <text x="280" y="150" textAnchor="start" className="text-white text-base font-medium" transform="translate(20, 0)">People Swap</text>
       <text x="150" y="290" textAnchor="middle" className="text-white text-base font-medium">Fees Increase</text>
@@ -46,7 +46,10 @@ const DeFiPage: React.FC = () => {
           <article className="prose prose-invert prose-lg max-w-none">
             <h1 className="text-4xl font-bold text-white mb-8">Decentralized Finance (DeFi)</h1>
             <p>
-              On Ethereum, DeFi refers to applications that provide financial services such as lending, borrowing, and exchanging of funds (tokens) without the need of a centralized intermediary (e.g., banks). These applications are decentralized by nature that they are on-chain smart contracts that are not owned/controlled by a single entity.
+              On Ethereum, DeFi refers to applications that provide financial services such as lending, borrowing, and exchanging of funds (tokens) without the need of a centralized intermediary (e.g., banks).
+            </p>
+            <p>
+              These applications are decentralized by nature that they are on-chain smart contracts that are not owned/controlled by a single entity.
             </p>
             <p>
               There are too many DeFi applications for us to cover them all, but the beauty of it is that many of them will "click" in your head once you get the few basic ones!
@@ -56,60 +59,82 @@ const DeFiPage: React.FC = () => {
               Let’s jump right into it through one of the most popular types of DeFi application - Automated Market Makers (AMMs).
             </p>
             <p>
-              AMMs refer to exchange venues that do not require any human intervention through the entire process. They typically consist of two components: The swapping interface, and the liquidity pool. We'll go through them both here, but let's first set a goal for ourselves and see how we may achieve it.
+              AMMs refer to exchange venues that do not require any human intervention through the entire process. Let us better understand it using an example!
             </p>
             <p>
-              Now, let's imagine that you wish to sell 1 ETH (worth ~$3000) for USDT. We'll explore two ways of doing it - without and with AMMs.
-            </p>
-            <h3 className="text-xl font-semibold text-white mt-8 mb-4">Without AMMs - the old way</h3>
-            <p>
-              You'll be looking for a centralized exchange (similar to a traditional stock exchange), whose steps would be something like:
+              Imagine that you have 2 ETH, and wish to sell 1 ETH (worth ~$3000) for USDT. As a user, you likely care about two things:
             </p>
             <ol className="list-decimal pl-6 mb-6">
-              <li>Depositing it into said trading venue (exchange)</li>
-              <li>Wait for your deposit to be credited</li>
-              <li>Selling ETH for USDT</li>
-              <li>Withdrawing the USDT back to your wallet, or to pay for your service.</li>
+              <li>How fast can I do it?</li>
+              <li>How cheap can I do it?</li>
             </ol>
-            <p>Now let's see how we can do it with AMMs.</p>
+            <p>
+              We'll explore two ways of doing it - without and with AMMs.
+            </p>
+            <h3 className="text-xl font-semibold text-white mt-8 mb-4">Without AMMs - the old way</h3>
+            <ol className="list-decimal pl-6 mb-6">
+              <li>Look for a centralized exchange (similar to a traditional stock exchange)</li>
+              <li>Deposit ETH</li>
+              <li>Wait for your ETH deposit to be credited</li>
+              <li>Sell ETH for USDT</li>
+              <li>Withdraw the USDT back to your wallet</li>
+            </ol>
+            <p>
+              That usually takes about 15 minutes? Assuming you already have an account and know your way around an exchange. If not, you'll probably have to go through lengthy account creation + KYC processes that requires &gt;24 hours!
+            </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">With AMMs - the DeFi way</h3>
             <ol className="list-decimal pl-6">
               <li>
-                Navigate to Uniswap and connect your wallet. You should then see your wallet balance.
+                Connect your wallet to an AMM service on a website to see your balance.
                 <div className="my-8">
                   <WalletBalance eth={2} />
                 </div>
               </li>
               <li>
-                You'll select the assets you wish to swap, in this case ETH to USDT, and then enter the amount you wish to exchange.
+                Select the assets you wish to swap - in this case ETH to USDT
               </li>
               <li>
-                The interface will indicate to you the expected amount. Try it out below to get a feel of how works!
-                <div className="my-8">
-                  <UniswapSwapAndBalance />
-                </div>
+                Enter the amount you wish to exchange and the interface will indicate the expected amount.
+              </li>
+              <li>
+                All can be done within a minute!
               </li>
             </ol>
-            <p><strong>Note:</strong> Your demo wallet has 2 ETH, feel free to swap it in any way you want!</p>
+            <p>
+              Try it out below to get a feel of how it works! You can reverse the swap direction too.
+              <div className="my-8">
+                <UniswapSwapAndBalance />
+              </div>
+            </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">Wow - I can just swap... anything?</h3>
             <p>
-              Theoretically - Yes! Any swap can happen provided there exists a liquidity pool that matches the intended swap (e.g., ETH for USDT, or ETH for USDC). You won't be able to swap if liquidity does not exist.
+              Theoretically - Yes! Any swap can happen provided there exists a matching liquidity pool (e.g., ETH + USDT, or ETH + USDC). You won't be able to swap if liquidity does not exist.
             </p>
             <p>
               Think of liquidity pools as the storage vault of an automated money exchanger. The front of the shop is the application you just interacted with earlier.
             </p>
             <p>
-              However, unlike traditional money exchanges where we require personnel re-stock the vault + man the front, the beauty of a DeFi app like ours is that anyone can provide liquidity to pools to create viable exchange markets that run 24/7!
+              Unlike traditional money exchanges humans re-stock the vault + man the front, the beauty of a DeFi app is that no humans are required to run it 24/7. Thus, cutting out the supposed "middleman"
             </p>
-            <h3 className="text-xl font-semibold text-white mt-8 mb-4">But... Why would anyone want to deposit / provide liquidity?</h3>
+            <h3 className="text-xl font-semibold text-white mt-8 mb-4">But... Why would anyone deposit into liquidity pools?</h3>
             <p>
-              Excellent question! The exchange rate you get is solely based on the ratio of assets within the liquidity pool, which is determined using a set of mathematical formulas.
-            </p>
-            <p>
-              As a user, you pay a small fee (usually 0.25%) when you make a swap, which goes to the liquidity provider. This incentive ensures that liquidity provider earn a fee for parking their money in the pool (*much like how you earn money for depositing into a bank!*).
+              Excellent question!
             </p>
             <p>
-              The cycle goes something like this:
+              Short answer - they can make money as liquidity provider.
+            </p>
+            <p>
+              Slightly longer answer - As a user, you pay a small fee to the liquidity providers (usually 0.25%) when you swap. This incentive ensures that liquidity provider earn a fee for parking their money in the pool (*much like how you earn money for depositing into a bank!*).
+            </p>
+            <h3 className="text-xl font-semibold text-white mt-8 mb-4">Does the amount of money in the liquidity pool matter?</h3>
+            <p>
+              Absolutely! That is the main factor in deciding how good of an exchange rate you'll get when swapping.
+            </p>
+            <p>
+              In an AMM, the exchange rate is based on the ratio of assets within the liquidity pool, which is determined using a set of mathematical formulas.
+            </p>
+            <p>
+              In this way, more liquidity = better exchange rates = more swaps = more fees, which in turn bring in even more liquidity! Visualized:
             </p>
             <LiquidityCycleGraphic />
             <p>
