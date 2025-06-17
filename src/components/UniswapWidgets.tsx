@@ -79,16 +79,16 @@ export const UniswapSwapInterface: React.FC = () => {
 export const UniswapSwapAndBalance: React.FC = () => {
   const [balance, setBalance] = useState<{ eth: number; usdt: number }>({ eth: 2, usdt: 0 });
   const [isSwapping, setIsSwapping] = useState(false);
+  const [swapCompleted, setSwapCompleted] = useState(false);
   const [isEthToUsdt, setIsEthToUsdt] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [sellAmount, setSellAmount] = useState<string>(''); // User input as string
+  const [sellAmount, setSellAmount] = useState<string>('');
   const ethLogo = '/img/eth-logo.svg';
   const usdtLogo = '/img/usdt.svg';
-  const EXCHANGE_RATE = 3000; // 1 ETH = 3000 USDT
+  const EXCHANGE_RATE = 3000;
 
   const handleSellAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Allow empty input or valid numbers (including decimals)
     if (value === '' || /^\d*\.?\d*$/.test(value)) {
       setSellAmount(value);
       setError(null);
@@ -98,9 +98,9 @@ export const UniswapSwapAndBalance: React.FC = () => {
   const calculateBuyAmount = () => {
     const sell = parseFloat(sellAmount) || 0;
     if (isEthToUsdt) {
-      return (sell * EXCHANGE_RATE).toFixed(2); // ETH to USDT
+      return (sell * EXCHANGE_RATE).toFixed(2);
     } else {
-      return (sell / EXCHANGE_RATE).toFixed(6); // USDT to ETH
+      return (sell / EXCHANGE_RATE).toFixed(6);
     }
   };
 
@@ -124,19 +124,26 @@ export const UniswapSwapAndBalance: React.FC = () => {
 
   const handleSwapComplete = () => {
     setIsSwapping(false);
+    setSwapCompleted(true);
     const sell = parseFloat(sellAmount);
     if (isEthToUsdt) {
       setBalance({ eth: balance.eth - sell, usdt: balance.usdt + sell * EXCHANGE_RATE });
     } else {
       setBalance({ eth: balance.eth + sell / EXCHANGE_RATE, usdt: balance.usdt - sell });
     }
-    setSellAmount(''); // Clear input after swap
+    setSellAmount('');
+
+    // Reset to "Swap" after 2 seconds
+    setTimeout(() => {
+      setSwapCompleted(false);
+    }, 2000);
   };
 
   const handleReverseSwap = () => {
     setIsEthToUsdt(!isEthToUsdt);
     setError(null);
     setIsSwapping(false);
+    setSwapCompleted(false);
     setSellAmount('');
   };
 
@@ -194,7 +201,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 relative">
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-base">You pay</span>
             <span className="text-white text-base">
@@ -209,11 +216,11 @@ export const UniswapSwapAndBalance: React.FC = () => {
           </div>
           <button
             onClick={handleSwap}
-            disabled={isSwapping}
-            className="w-full bg-[#2172E5] text-white font-semibold px-4 py-3 rounded-xl hover:bg-[#1A5CCB] focus:outline-none focus:ring-2 focus:ring-[#2172E5] transition flex items-center justify-center disabled:opacity-50"
+            disabled={isSwapping || swapCompleted}
+            className="w-full bg-[#2172E5] text-white font-semibold px-4 py-3 rounded-xl hover:bg-[#1A5CCB] focus:outline-none focus:ring-2 focus:ring-[#2172E5] transition flex items-center justify-center disabled:opacity-50 relative"
           >
             {isSwapping ? (
-              <span className="flex items-center">
+              <>
                 <span className="text-gray-400">Swapping</span>
                 <CountdownCircle
                   duration={12}
@@ -222,7 +229,18 @@ export const UniswapSwapAndBalance: React.FC = () => {
                   strokeWidth={3}
                   className="ml-3 text-blue-400"
                 />
-              </span>
+              </>
+            ) : swapCompleted ? (
+              <>
+                Swap Complete
+                {/* Confetti Animation */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className="confetti animate-confetti bg-blue-400 w-1 h-1 rounded-full absolute left-1/4 top-0"></div>
+                  <div className="confetti animate-confetti bg-red-400 w-1 h-1 rounded-full absolute left-1/3 top-0" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="confetti animate-confetti bg-green-400 w-1 h-1 rounded-full absolute left-1/2 top-0" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="confetti animate-confetti bg-yellow-400 w-1 h-1 rounded-full absolute left-2/3 top-0" style={{ animationDelay: '0.3s' }}></div>
+                </div>
+              </>
             ) : (
               'Swap'
             )}
@@ -247,6 +265,15 @@ export const UniswapSwapAndBalance: React.FC = () => {
           </div>
         </div>
       </div>
+      <style jsx>{`
+        @keyframes confetti {
+          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(100px) rotate(360deg); opacity: 0; }
+        }
+        .animate-confetti {
+          animation: confetti 1s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 };
