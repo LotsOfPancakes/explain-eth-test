@@ -4,7 +4,7 @@ import { useBlockchainContext } from "../contexts/BlockchainContext";
 import TransactionModal from "../components/TransactionModal";
 import TransactionHistoryOverlay from "../components/TransactionHistoryOverlay";
 import Navigation from "../components/Navigation";
-import { WalletBalance, UniswapSwapInterface, UniswapSwapProcess } from "../components/UniswapWidgets";
+import { WalletBalance, UniswapSwapInterface, UniswapSwapAndBalance } from "../components/UniswapWidgets";
 import {
   FootnoteList,
   FootnoteProvider,
@@ -89,9 +89,9 @@ const DeFiPage: React.FC = () => {
                   </div>
                 </li>
                 <li>
-                  You’ll put in the amount you want to sell (1 ETH). You’ll see the expected amount, click “Swap”, and see your updated balance.
+                  Confirm the swap amount, click “Swap”, and see your updated balance.
                   <div className="my-8">
-                    <UniswapSwapProcess />
+                    <UniswapSwapAndBalance />
                   </div>
                 </li>
               </ol>
