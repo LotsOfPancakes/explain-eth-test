@@ -62,14 +62,7 @@ const DeFiPage: React.FC = () => {
               AMMs refer to exchange venues that do not require any human intervention through the entire process. Let us better understand it using an example!
             </p>
             <p>
-              Imagine that you have 2 ETH, and wish to sell 1 ETH (worth ~$3000) for USDT. As a user, you likely care about two things:
-            </p>
-            <ol className="list-decimal pl-6 mb-6">
-              <li>How fast can I do it?</li>
-              <li>How cheap can I do it?</li>
-            </ol>
-            <p>
-              We'll explore two ways of doing it - without and with AMMs.
+              Imagine that you have 2 ETH, and wish to sell 1 ETH (worth ~$3000) for USDT. We'll explore two ways of doing it - without and with AMMs.
             </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">Without AMMs - the old way</h3>
             <ol className="list-decimal pl-6 mb-6">
@@ -80,7 +73,7 @@ const DeFiPage: React.FC = () => {
               <li>Withdraw the USDT back to your wallet</li>
             </ol>
             <p>
-              That usually takes about 15 minutes? Assuming you already have an account and know your way around an exchange. If not, you'll probably have to go through lengthy account creation + KYC processes that requires &gt;24 hours!
+              That usually takes about 15 minutes? Assuming you already have an account and know your way around an exchange. If not, you'll probably have to go through lengthy account creation + KYC processes that requires >24 hours!
             </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">With AMMs - the DeFi way</h3>
             <ol className="list-decimal pl-6">
@@ -137,9 +130,24 @@ const DeFiPage: React.FC = () => {
               In this way, more liquidity = better exchange rates = more swaps = more fees, which in turn bring in even more liquidity! Visualized:
             </p>
             <LiquidityCycleGraphic />
+            <h2 className="text-2xl font-semibold text-white mt-8 mb-4">Closing</h2>
             <p>
-              Of course, there are many caveats to this that touches on profitability etc. but shall be a topic for another time!
+              So - are AMMs better? In most cases - yes! By cutting out the middlemen (operators), you can effectively offer better rates + quicker turnaround that benefits the end-user.
             </p>
+            <p>
+              With a traditional approach, you may need anywhere between 30 minutes to 24 hours for your exchange, while the DeFi approach only takes 1 minute or less.
+            </p>
+            <p>
+              When you're ready to learn about the next DeFi application, click below!
+            </p>
+            <div className="mt-4">
+              <a
+                href="#"
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+              >
+                Next DeFi Application
+              </a>
+            </div>
           </article>
           <Navigation />
         </div>
