@@ -1,7 +1,22 @@
 // src/pages/DeFi.tsx
-import Link from 'next/link';
-import React from 'react';
-import { WalletBalance, SwapInterface, SwapOutcome } from '../components/UniswapWidgets';
+import Link from 'next/link'
+import React, { useState } from 'react'
+import { useBlockchainContext } from '../contexts/BlockchainContext'
+import BalanceComponent from '../components/BalanceComponent'
+import ProfileCards from '../components/ProfileCards'
+import TransactionModal from '../components/TransactionModal'
+import TransactionHistoryOverlay from '../components/TransactionHistoryOverlay'
+import TrainAnimation from '../components/TrainAnimation'
+import BlockAnimation from '../components/BlockAnimation'
+import StaticBlockchain from '../components/StaticBlockchain'
+import DummyTransactionModal from '../components/DummyTransactionModal'
+import Navigation from '../components/Navigation'
+import EthShowcase from '../components/EthShowcase'
+import NetworkAnimation from '../components/NetworkAnimation'
+import IntroAbstractQuadrant from '../components/IntroAbstractQuadrant'
+import { FootnoteProvider, FootnoteRef, FootnoteList } from '../components/Footnote'
+import Vocab from '../components/Vocab'
+import { WalletBalance, SwapInterface, SwapOutcome } from '../components/UniswapWidgets'
 
 const DeFi: React.FC = () => {
   return (
