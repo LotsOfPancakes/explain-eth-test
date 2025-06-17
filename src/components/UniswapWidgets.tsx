@@ -65,10 +65,20 @@ export const UniswapSwapAndBalance: React.FC = () => {
   const [isSwapping, setIsSwapping] = useState(false);
   const [swapCompleted, setSwapCompleted] = useState(false);
   const [isEthToUsdt, setIsEthToUsdt] = useState(true); // Tracks swap direction
+  const [error, setError] = useState<string | null>(null);
   const ethLogo = 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png';
   const usdtLogo = 'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png';
 
   const handleSwap = () => {
+    if (isEthToUsdt && balance.eth < 1) {
+      setError('You do not have enough ETH');
+      return;
+    }
+    if (!isEthToUsdt && balance.usdt < 3000) {
+      setError('You do not have enough USDT');
+      return;
+    }
+    setError(null);
     setIsSwapping(true);
     setSwapCompleted(false);
   };
@@ -85,15 +95,16 @@ export const UniswapSwapAndBalance: React.FC = () => {
 
   const handleReverseSwap = () => {
     setIsEthToUsdt(!isEthToUsdt);
-    // Reset balance to initial state for demo
-    setBalance({ eth: isEthToUsdt ? 2 : 1, usdt: isEthToUsdt ? 0 : 3000 });
+    setError(null);
     setIsSwapping(false);
     setSwapCompleted(false);
+    // Maintain balance until swap occurs
   };
 
   const handleResetSwap = () => {
     setSwapCompleted(false);
-    setBalance({ eth: isEthToUsdt ? 2 : 1, usdt: isEthToUsdt ? 0 : 3000 });
+    setError(null);
+    setBalance({ eth: 2, usdt: 0 }); // Reset to initial balance
   };
 
   return (
@@ -101,7 +112,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
       <h4 className="text-lg font-semibold text-white mb-4">Swap & Balance</h4>
       <div className="space-y-4">
         <div>
-          <label className="block text-gray-400 text-sm mb-1">{isEthToUsdt ? 'Sell' : 'Buy'}</label>
+          <label className="block text-gray-400 text-sm mb-1">Sell</label>
           <div className="bg-[#252529] border border-[#3A3B43] rounded-lg p-3 flex items-center">
             <img src={isEthToUsdt ? ethLogo : usdtLogo} alt={isEthToUsdt ? 'ETH' : 'USDT'} className="w-6 h-6 mr-2" />
             <span className="text-white flex-1">{isEthToUsdt ? 'ETH' : 'USDT'}</span>
@@ -121,7 +132,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
           </button>
         </div>
         <div>
-          <label className="block text-gray-400 text-sm mb-1">{isEthToUsdt ? 'Buy' : 'Sell'}</label>
+          <label className="block text-gray-400 text-sm mb-1">Buy</label>
           <div className="bg-[#252529] border border-[#3A3B43] rounded-lg p-3 flex items-center">
             <img src={isEthToUsdt ? usdtLogo : ethLogo} alt={isEthToUsdt ? 'USDT' : 'ETH'} className="w-6 h-6 mr-2" />
             <span className="text-white flex-1">{isEthToUsdt ? 'USDT' : 'ETH'}</span>
@@ -145,16 +156,25 @@ export const UniswapSwapAndBalance: React.FC = () => {
             className="w-full bg-[#2172E5] text-white font-semibold px-4 py-3 rounded-xl hover:bg-[#1A5CCB] focus:outline-none focus:ring-2 focus:ring-[#2172E5] transition flex items-center justify-center disabled:opacity-50"
           >
             {isSwapping ? (
-              <>
-                <CircularCountdown duration={12} onComplete={handleSwapComplete} size={20} strokeWidth={2} />
-                <span className="ml-2">Swapping</span>
-              </>
+              <span className="flex items-center">
+                <span className="text-gray-400">Swapping</span>
+                <CircularCountdown
+                  duration={12}
+                  onComplete={handleSwapComplete}
+                  size={24}
+                  strokeWidth={3}
+                  className="ml-2 text-blue-400"
+                />
+              </span>
             ) : swapCompleted ? (
               'Swap Completed'
             ) : (
               'Swap'
             )}
           </button>
+          {error && (
+            <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
+          )}
         </div>
         <div className="mt-6">
           <h5 className="text-base font-semibold text-white mb-2">Your Balance</h5>
