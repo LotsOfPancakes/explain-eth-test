@@ -1,3 +1,4 @@
+// src/components/UniswapWidgets.tsx
 import React from 'react';
 
 export const WalletBalance: React.FC<{ eth: number; usdt?: number }> = ({ eth, usdt }) => (
