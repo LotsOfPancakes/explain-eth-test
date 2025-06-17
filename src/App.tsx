@@ -5,6 +5,7 @@ import AppsPage from './pages/AppsPage'
 import TokensPage from './pages/TokensPage'
 import Apps2Page from './pages/Apps2Page'
 import PlaygroundPage from './pages/PlaygroundPage'
+import DeFiPage from './pages/DeFiPage'
 import { BlockchainProvider } from './contexts/BlockchainContext'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/tokens" element={<TokensPage />} />
           <Route path="/apps2" element={<Apps2Page />} />
           <Route path="/playground" element={<PlaygroundPage />} />
+          <Route path="/defi" element={<DeFiPage />} />
           {/* Catch-all route - redirect any unmatched routes to /intro */}
           <Route path="*" element={<Navigate to="/intro" replace />} />
         </Routes>
