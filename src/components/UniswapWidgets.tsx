@@ -1,5 +1,5 @@
 // src/components/UniswapWidgets.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CircularCountdown from './CircularCountdown';
 
 export const WalletBalance: React.FC<{ eth: number; usdt?: number }> = ({ eth, usdt }) => (
@@ -64,8 +64,9 @@ export const UniswapSwapAndBalance: React.FC = () => {
   const [balance, setBalance] = useState<{ eth: number; usdt: number }>({ eth: 2, usdt: 0 });
   const [isSwapping, setIsSwapping] = useState(false);
   const [swapCompleted, setSwapCompleted] = useState(false);
-  const [isEthToUsdt, setIsEthToUsdt] = useState(true); // Tracks swap direction
+  const [isEthToUsdt, setIsEthToUsdt] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [swapKey, setSwapKey] = useState(0); // Force rerender for countdown
   const ethLogo = 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png';
   const usdtLogo = 'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png';
 
@@ -81,6 +82,14 @@ export const UniswapSwapAndBalance: React.FC = () => {
     setError(null);
     setIsSwapping(true);
     setSwapCompleted(false);
+    setSwapKey(prev => prev + 1); // Reset countdown
+
+    // Fallback timeout to ensure completion
+    setTimeout(() => {
+      if (isSwapping) {
+        handleSwapComplete();
+      }
+    }, 12000);
   };
 
   const handleSwapComplete = () => {
@@ -98,13 +107,13 @@ export const UniswapSwapAndBalance: React.FC = () => {
     setError(null);
     setIsSwapping(false);
     setSwapCompleted(false);
-    // Maintain balance until swap occurs
   };
 
   const handleResetSwap = () => {
     setSwapCompleted(false);
     setError(null);
-    setBalance({ eth: 2, usdt: 0 }); // Reset to initial balance
+    setBalance({ eth: 2, usdt: 0 });
+    setSwapKey(prev => prev + 1);
   };
 
   return (
@@ -159,6 +168,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
               <span className="flex items-center">
                 <span className="text-gray-400">Swapping</span>
                 <CircularCountdown
+                  key={swapKey}
                   duration={12}
                   onComplete={handleSwapComplete}
                   size={24}
