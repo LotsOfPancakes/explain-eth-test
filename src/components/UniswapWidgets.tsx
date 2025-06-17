@@ -102,18 +102,18 @@ export const UniswapSwapAndBalance: React.FC = () => {
     }
   };
 
+  const isInvalidInput = () => {
+    const sell = parseFloat(sellAmount);
+    return !sell || sell <= 0 || sellAmount === '';
+  };
+
   const isInsufficientBalance = () => {
     const sell = parseFloat(sellAmount) || 0;
-    return (
-      (isEthToUsdt && sell > balance.eth) ||
-      (!isEthToUsdt && sell > balance.usdt) ||
-      sell <= 0 ||
-      !sell
-    );
+    return (isEthToUsdt && sell > balance.eth) || (!isEthToUsdt && sell > balance.usdt);
   };
 
   const handleSwap = () => {
-    if (isInsufficientBalance()) return;
+    if (isInvalidInput() || isInsufficientBalance()) return;
     setIsSwapping(true);
   };
 
@@ -208,7 +208,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
           </div>
           <button
             onClick={handleSwap}
-            disabled={isSwapping || swapCompleted || isInsufficientBalance()}
+            disabled={isSwapping || swapCompleted || isInvalidInput() || isInsufficientBalance()}
             className="w-full bg-[#2172E5] text-white font-semibold px-4 py-3 rounded-xl hover:bg-[#1A5CCB] focus:outline-none focus:ring-2 focus:ring-[#2172E5] transition flex items-center justify-center disabled:opacity-50 relative"
           >
             {isSwapping ? (
@@ -242,6 +242,8 @@ export const UniswapSwapAndBalance: React.FC = () => {
                   <div className="confetti animate-confetti bg-pink-500 w-2 h-2 rounded-full absolute left-1/2 top-0" style={{ animationDelay: '0.6s' }}></div>
                 </div>
               </>
+            ) : isInvalidInput() ? (
+              <span className="text-gray-300">Enter an amount</span>
             ) : isInsufficientBalance() ? (
               <span className="text-gray-300">Insufficient {isEthToUsdt ? 'ETH' : 'USDT'}</span>
             ) : (
@@ -258,7 +260,7 @@ export const UniswapSwapAndBalance: React.FC = () => {
             </div>
             {balance.usdt > 0 && (
               <div className="flex justify-between">
-                <span className="text-gray-300 text-2xl font-medium">USDT</span>
+                <span className="text-green-500 text-2xl font-medium">USDT</span>
                 <span className="text-green-500 text-2xl font-medium">{balance.usdt.toFixed(2)}</span>
               </div>
             )}
