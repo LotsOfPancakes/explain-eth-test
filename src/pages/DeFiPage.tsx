@@ -73,7 +73,7 @@ const DeFiPage: React.FC = () => {
               <li>Withdraw the USDT back to your wallet</li>
             </ol>
             <p>
-              That usually takes about 15 minutes? Assuming you already have an account and know your way around an exchange. If not, you'll probably have to go through lengthy account creation + KYC processes that requires >24 hours!
+              That usually takes about 15 minutes? Assuming you already have an account and know your way around an exchange. If not, you'll probably have to go through lengthy account creation + KYC processes that requires &gt;24 hours!
             </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">With AMMs - the DeFi way</h3>
             <ol className="list-decimal pl-6">
