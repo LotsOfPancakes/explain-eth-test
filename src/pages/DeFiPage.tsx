@@ -1,10 +1,10 @@
-// src/pages/DeFi.tsx
+// src/pages/DeFiPage.tsx
 import React, { useState } from "react";
 import { useBlockchainContext } from "../contexts/BlockchainContext";
 import TransactionModal from "../components/TransactionModal";
 import TransactionHistoryOverlay from "../components/TransactionHistoryOverlay";
 import Navigation from "../components/Navigation";
-import { WalletBalance, SwapInterface, SwapOutcome } from "../components/UniswapWidgets";
+import { WalletBalance, UniswapSwapInterface, UniswapSwapOutcome } from "../components/UniswapWidgets";
 import {
   FootnoteList,
   FootnoteProvider,
@@ -28,20 +28,13 @@ const DeFi: React.FC = () => {
     <FootnoteProvider>
       <div className="min-h-screen bg-gray-900 text-white">
         <div className="max-w-3xl mx-auto px-6 py-12">
-          {/* Article Content */}
           <article className="prose prose-invert prose-lg max-w-none">
-            {/* DeFi Section */}
             <section className="mb-16">
               <h1 className="text-4xl font-bold text-white mb-8">DeFi</h1>
-
-              <p>
-                DeFi is the abbreviation of (De)centralized (Fi)nance.
-              </p>
-
+              <p>DeFi is the abbreviation of (De)centralized (Fi)nance.</p>
               <p>
                 On Ethereum, DeFi refers to applications that provide financial services such as lending, borrowing, and exchanging of funds (<Vocab>tokens</Vocab>) without the need of a centralized intermediary (e.g., banks). These applications are decentralized by nature that they are on-chain <Vocab>smart contracts</Vocab> that are not owned/controlled by a single entity.
               </p>
-
               <p>
                 Let’s jump right into introducing one of the most popular types of DeFi application - Automated Market Makers (AMMs), and the one who started it all is{' '}
                 <a
@@ -65,11 +58,9 @@ const DeFi: React.FC = () => {
                 </FootnoteRef>.
                 Uniswap is revolutionary for two main components - the swapping and liquidity.
               </p>
-
               <p>
                 Now, let’s imagine that you wish to sell 1 ETH (worth ~$3000) for USDT. We’ll explore how (1) you’d do this without Uniswap (AMMs) and then (2) see how Uniswap makes it simpler.
               </p>
-
               <h2 className="text-2xl font-semibold text-white mt-8 mb-4">Without AMMs - the old way</h2>
               <p>
                 You’ll be looking for a centralized exchange (similar to a traditional stock exchange), whose steps would be something like:
@@ -80,7 +71,6 @@ const DeFi: React.FC = () => {
                 <li>Selling ETH for USDT</li>
                 <li>Withdrawing the USDT back to your wallet, or to pay for your service.</li>
               </ol>
-
               <h2 className="text-2xl font-semibold text-white mt-8 mb-4">With AMMs - the faster way</h2>
               <p>
                 With Uniswap, the process is much simpler. Here’s how it works:
@@ -95,13 +85,13 @@ const DeFi: React.FC = () => {
                 <li>
                   You’ll select the assets you wish to swap, in this case ETH to USDT.
                   <div className="my-8">
-                    <SwapInterface />
+                    <UniswapSwapInterface />
                   </div>
                 </li>
                 <li>
                   You’ll put in the amount you want to sell (1 ETH). You’ll see the expected amount and you can click “Swap”.
                   <div className="my-8">
-                    <SwapOutcome />
+                    <UniswapSwapOutcome />
                   </div>
                 </li>
                 <li>
@@ -113,15 +103,9 @@ const DeFi: React.FC = () => {
               </ol>
             </section>
           </article>
-
-          {/* Footnotes */}
           <FootnoteList />
-
-          {/* Navigation */}
           <Navigation />
         </div>
-
-        {/* Transaction Modal */}
         {modalState.isOpen && (
           <TransactionModal
             isOpen={modalState.isOpen}
@@ -131,8 +115,6 @@ const DeFi: React.FC = () => {
             pendingTransaction={currentPendingTransaction}
           />
         )}
-
-        {/* Transaction History Overlay */}
         <TransactionHistoryOverlay
           ethereumTransactions={transactionHistory.filter(
             (tx) => tx.chain === "ethereum"
