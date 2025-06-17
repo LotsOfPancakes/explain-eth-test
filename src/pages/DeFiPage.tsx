@@ -123,7 +123,7 @@ const DeFiPage: React.FC = () => {
               Short answer - They can make money.
             </p>
             <p>
-              Slightly longer answer - As a user, you pay a small fee to the liquidity providers (usually 0.25%) when you swap. This incentive ensures that liquidity providers earn a fee for providing funds to a pool (*similar to interests bank give you for fixed deposits*)
+              Slightly longer answer - As a user, you pay a small fee to the liquidity providers (usually 0.25%) when you swap. This incentive ensures that liquidity providers earn a fee for providing funds to a pool (*similar to interests banks give you for fixed deposits*)
             </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">Does the amount of money in the liquidity pool matter?</h3>
             <p>
@@ -144,16 +144,8 @@ const DeFiPage: React.FC = () => {
               With a traditional approach, you may need anywhere between 30 minutes to 24 hours for your exchange, while the DeFi approach only takes 1 minute or less.
             </p>
             <p>
-              When you're ready to learn about the next DeFi application, click below!
+              Whenever you're ready to learn about the next DeFi application, read on!
             </p>
-            <div className="mt-4">
-              <a
-                href="#"
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-              >
-                Next DeFi Application
-              </a>
-            </div>
           </article>
           <Navigation />
         </div>
