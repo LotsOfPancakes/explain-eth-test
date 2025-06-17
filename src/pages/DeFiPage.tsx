@@ -46,23 +46,26 @@ const DeFiPage: React.FC = () => {
           <article className="prose prose-invert prose-lg max-w-none">
             <h1 className="text-4xl font-bold text-white mb-8">Decentralized Finance (DeFi)</h1>
             <p>
-              On Ethereum, DeFi refers to applications that provide financial services such as lending, borrowing, and exchanging of funds (tokens) without the need of a centralized intermediary (e.g., banks).
+              On Ethereum, DeFi refers to financial applications such as lending, borrowing and exchanging of funds(tokens) without any form of centralized intermediaries (e.g., banks).
             </p>
             <p>
               These applications are decentralized by nature that they are on-chain smart contracts that are not owned/controlled by a single entity.
             </p>
             <p>
-              There are too many DeFi applications for us to cover them all, but the beauty of it is that many of them will "click" in your head once you get the few basic ones!
+              There are many types of DeFi applications - let's focus on one at a time!
             </p>
             <h2 className="text-2xl font-semibold text-white mt-8 mb-4">Automated Market Makers (AMMs)</h2>
             <p>
-              Let’s jump right into it through one of the most popular types of DeFi application - Automated Market Makers (AMMs).
+              One of the most popular types of DeFi application are Automated Market Makers (AMMs).
             </p>
             <p>
-              AMMs refer to exchange venues that do not require any human intervention through the entire process. Let us better understand it using an example!
+              As the name suggests, AMMs refer to automated exchange venues that do not require human intervention. Let's understand how it works through a specific example/use case.
             </p>
             <p>
-              Imagine that you have 2 ETH, and wish to sell 1 ETH (worth ~$3000) for USDT. We'll explore two ways of doing it - without and with AMMs.
+              Imagine that you have 2 ETH, and wish to sell 1 ETH (worth ~$3000) for USDT.
+            </p>
+            <p>
+              We'll explore two ways of doing it - without and with AMMs.
             </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">Without AMMs - the old way</h3>
             <ol className="list-decimal pl-6 mb-6">
@@ -73,7 +76,10 @@ const DeFiPage: React.FC = () => {
               <li>Withdraw the USDT back to your wallet</li>
             </ol>
             <p>
-              That usually takes about 15 minutes? Assuming you already have an account and know your way around an exchange. If not, you'll probably have to go through lengthy account creation + KYC processes that requires &gt;24 hours!
+              Assuming you already have an account, it'll take ~20 minutes. If not, you'll likely go through account creation + KYC processes that requires >24 hours! That's a really long wait to buy and sell something, no?
+            </p>
+            <p>
+              Let's see how AMMs fare in this regard.
             </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">With AMMs - the DeFi way</h3>
             <ol className="list-decimal pl-6">
@@ -101,33 +107,33 @@ const DeFiPage: React.FC = () => {
             </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">Wow - I can just swap... anything?</h3>
             <p>
-              Theoretically - Yes! Any swap can happen provided there exists a matching liquidity pool (e.g., ETH + USDT, or ETH + USDC). You won't be able to swap if liquidity does not exist.
+              Theoretically - Yes! Any swap can happen provided there exists a matching liquidity pool (e.g., ETH + USDT, or ETH + USDC). You won't be able to swap if liquidity does not exist (like if a money changer runs out of the currency you need)
+            </p>
+            <p>
+              Unlike traditional money exchangers where humans re-stock the vault + man the front, the beauty of a DeFi app is that no humans are required to run it 24/7. Thus, cutting out the supposed "middleman".
             </p>
             <p>
               Think of liquidity pools as the storage vault of an automated money exchanger. The front of the shop is the application you just interacted with earlier.
-            </p>
-            <p>
-              Unlike traditional money exchanges humans re-stock the vault + man the front, the beauty of a DeFi app is that no humans are required to run it 24/7. Thus, cutting out the supposed "middleman"
             </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">But... Why would anyone deposit into liquidity pools?</h3>
             <p>
               Excellent question!
             </p>
             <p>
-              Short answer - they can make money as liquidity provider.
+              Short answer - They can make money.
             </p>
             <p>
-              Slightly longer answer - As a user, you pay a small fee to the liquidity providers (usually 0.25%) when you swap. This incentive ensures that liquidity provider earn a fee for parking their money in the pool (*much like how you earn money for depositing into a bank!*).
+              Slightly longer answer - As a user, you pay a small fee to the liquidity providers (usually 0.25%) when you swap. This incentive ensures that liquidity providers earn a fee for providing funds to a pool (*similar to interests bank give you for fixed deposits*)
             </p>
             <h3 className="text-xl font-semibold text-white mt-8 mb-4">Does the amount of money in the liquidity pool matter?</h3>
             <p>
               Absolutely! That is the main factor in deciding how good of an exchange rate you'll get when swapping.
             </p>
             <p>
-              In an AMM, the exchange rate is based on the ratio of assets within the liquidity pool, which is determined using a set of mathematical formulas.
+              In AMMs, more liquidity equals better exchange rate - this is determined by specific mathematical formulas defined in the smart contract.
             </p>
             <p>
-              In this way, more liquidity = better exchange rates = more swaps = more fees, which in turn bring in even more liquidity! Visualized:
+              Overall, this ingenious design creates a cycle where: more liquidity = better exchange rates = more swaps = more fees generated = more liquidity that wants to come in. Visualized:
             </p>
             <LiquidityCycleGraphic />
             <h2 className="text-2xl font-semibold text-white mt-8 mb-4">Closing</h2>
