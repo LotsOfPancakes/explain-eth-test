@@ -15,7 +15,8 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
     { path: '/intro', title: 'Intro', label: 'Introduction' },
     { path: '/apps', title: 'Apps Part 1', label: 'Apps' },
     { path: '/tokens', title: 'Tokens', label: 'Tokens' },
-    { path: '/apps2', title: 'Apps Part 2', label: 'Apps 2' }
+    { path: '/apps2', title: 'Apps Part 2', label: 'Apps 2' },
+    { path: '/defi', title: 'DeFi Part 1', label: 'DeFi' }
   ]
 
   const currentPageIndex = pages.findIndex(page => page.path === location.pathname)
