@@ -19,11 +19,11 @@ const LiquidityCycleGraphic: React.FC = () => (
       <path d="M150 270 L165 255 L150 240" fill="currentColor" />
       {/* Left arrow: More Liquidity (points right) */}
       <path d="M30 150 L45 165 L60 150" fill="currentColor" />
-      {/* Text labels: Positioned beside arrows */}
-      <text x="150" y="20" textAnchor="middle" className="text-white text-sm font-medium">Liquidity Added</text>
-      <text x="280" y="150" textAnchor="start" className="text-white text-sm font-medium" transform="translate(10, 0)">People Swap</text>
-      <text x="150" y="280" textAnchor="middle" className="text-white text-sm font-medium">Fees Increase</text>
-      <text x="20" y="150" textAnchor="end" className="text-white text-sm font-medium" transform="translate(-10, 0)">More Liquidity</text>
+      {/* Text labels: Positioned beside arrows with increased size and offset */}
+      <text x="150" y="10" textAnchor="middle" className="text-white text-base font-medium">Liquidity Added</text>
+      <text x="280" y="150" textAnchor="start" className="text-white text-base font-medium" transform="translate(20, 0)">People Swap</text>
+      <text x="150" y="290" textAnchor="middle" className="text-white text-base font-medium">Fees Increase</text>
+      <text x="20" y="150" textAnchor="end" className="text-white text-base font-medium" transform="translate(-20, 0)">More Liquidity</text>
     </svg>
   </div>
 );
