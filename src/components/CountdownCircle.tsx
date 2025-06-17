@@ -38,6 +38,7 @@ const CountdownCircle: React.FC<CountdownCircleProps> = ({
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - progress); // Animate from 0 to circumference
+  const secondsLeft = Math.ceil(timeLeft / 1000); // Display seconds
 
   return (
     <svg width={size} height={size} className={`inline-block ${className}`}>
@@ -62,6 +63,16 @@ const CountdownCircle: React.FC<CountdownCircleProps> = ({
         className={className}
         style={{ transition: 'stroke-dashoffset 0.05s linear' }}
       />
+      <text
+        x="50%"
+        y="50%"
+        dy=".3em"
+        textAnchor="middle"
+        className="text-white text-xs font-medium"
+        fill="currentColor"
+      >
+        {secondsLeft}
+      </text>
     </svg>
   );
 };
